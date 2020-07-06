@@ -2116,18 +2116,18 @@ int pp_std(ezpp_t ez) {
 
   /* flashlight */
   if (ez->mods & MODS_FL) {
-    float fl_bonus = 1.0f + 0.35f * al_min(1.0f, ez->nobjects / 200.0f);
+    float fl_bonus = 0.6f + 0.6f * al_min(1.0f, ez->nobjects / 200.0f);
     if (ez->nobjects > 200) {
-      fl_bonus += 0.3f * al_min(1, (ez->nobjects - 200) / 300.0f);
+      fl_bonus += 0.4f * al_min(1, (ez->nobjects - 200) / 300.0f);
     }
     if (ez->nobjects > 500) {
-      fl_bonus += (ez->nobjects - 500) / 1200.0f;
+      fl_bonus += 0.8f * (ez->nobjects - 500) / 1200.0f;
     }
     ez->aim_pp *= fl_bonus;
   }
 
   /* acc bonus (bad aim can lead to bad acc) */
-  acc_bonus = 0.5f + accuracy / 2.0f;
+  acc_bonus = 0.4f + accuracy / 2.0f;
 
   /* od bonus (high od requires better aim timing to acc) */
   od_squared = (float)pow(ez->od, 2);
@@ -2150,7 +2150,7 @@ int pp_std(ezpp_t ez) {
   ez->speed_pp *= 0.02f + accuracy;
 
   /* it's important to also consider accuracy difficulty when doing that */
-  ez->speed_pp *= 0.96f + (od_squared / 1600.0f);
+  ez->speed_pp *= 0.8f + (od_squared / 1600.0f);
 
   /* acc pp ---------------------------------------------------------- */
   /* arbitrary values tom crafted out of trial and error */
@@ -2161,18 +2161,18 @@ int pp_std(ezpp_t ez) {
   ez->acc_pp *= al_min(1.15f, (float)pow(ncircles / 1000.0f, 0.3f));
 
   if (ez->mods & MODS_HD) ez->acc_pp *= 1.08f;
-  if (ez->mods & MODS_FL) ez->acc_pp *= 1.02f;
+  if (ez->mods & MODS_FL) ez->acc_pp *= 1.12f;
 
   /* total pp -------------------------------------------------------- */
-  final_multiplier = 1.12f;
+  final_multiplier = 1.0f;
   if (ez->mods & MODS_NF) final_multiplier *= 0.90f;
-  if (ez->mods & MODS_SO) final_multiplier *= 0.95f;
+  if (ez->mods & MODS_SO) final_multiplier *= 1.0f;
 
   ez->pp = (float)(
     pow(
-      pow(ez->aim_pp, 1.1f) +
-      pow(ez->speed_pp, 1.1f) +
-      pow(ez->acc_pp, 1.1f),
+      pow(ez->aim_pp, 1.24f) +
+      pow(ez->speed_pp, 0.8f) +
+      pow(ez->acc_pp, 1.15f),
       1.0f / 1.1f
     ) * final_multiplier
   );
