@@ -2165,7 +2165,7 @@ int pp_std(ezpp_t ez) {
 
   /* total pp -------------------------------------------------------- */
   final_multiplier = 1.0f;
-  if (ez->mods & MODS_NF) final_multiplier *= 0.90f;
+  /* if (ez->mods & MODS_NF) final_multiplier *= 0.90f; */
   if (ez->mods & MODS_SO) final_multiplier *= 1.0f;
 
   ez->pp = (float)(
@@ -2232,7 +2232,7 @@ int pp_taiko(ezpp_t ez) {
 
   /* overall multipliers */
   final_multiplier = 1.1f;
-  if (ez->mods & MODS_NF) final_multiplier *= 0.90f;
+  /* if (ez->mods & MODS_NF) final_multiplier *= 0.90f; */
   if (ez->mods & MODS_HD) final_multiplier *= 1.10f;
 
   ez->pp = (
